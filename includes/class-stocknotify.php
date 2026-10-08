@@ -38,7 +38,15 @@ class Stocknotify {
 	 */
 	private function __construct() {
 		add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compatibility' ) );
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
+	}
+
+	/**
+	 * Load translation files from /languages.
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain( 'stocknotify', false, dirname( plugin_basename( STOCKNOTIFY_PLUGIN_FILE ) ) . '/languages' );
 	}
 
 	/**
@@ -64,9 +72,19 @@ class Stocknotify {
 			return;
 		}
 
+		// Create/upgrade the table after a plugin update (activation hooks don't run on updates).
+		if ( get_option( 'stocknotify_db_version' ) !== STOCKNOTIFY_VERSION ) {
+			Stocknotify_Activator::activate();
+		}
+
+		new Stocknotify_Privacy();
 		new Stocknotify_Ajax();
 		new Stocknotify_Public();
 		new Stocknotify_Notifier();
+
+		if ( is_admin() ) {
+			new Stocknotify_Admin();
+		}
 	}
 
 	/**

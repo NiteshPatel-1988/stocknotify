@@ -18,6 +18,7 @@ class Stocknotify_Deactivator {
 	 * Clear scheduled cron events.
 	 */
 	public static function deactivate() {
-		wp_clear_scheduled_hook( Stocknotify_Notifier::CRON_HOOK );
+		// Events carry arguments, so wp_clear_scheduled_hook() without them would match nothing.
+		wp_unschedule_hook( Stocknotify_Notifier::CRON_HOOK );
 	}
 }

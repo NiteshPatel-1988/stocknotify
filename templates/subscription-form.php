@@ -31,10 +31,17 @@ if ( $stocknotify_hidden ) {
 		<?php esc_html_e( 'Notify me when this product is back in stock', 'stocknotify' ); ?>
 	</p>
 
-	<form class="stocknotify-form" novalidate="novalidate">
-		<?php wp_nonce_field( 'stocknotify_subscribe', 'stocknotify_nonce' ); ?>
-		<input type="hidden" class="stocknotify-product-id" name="product_id" value="<?php echo esc_attr( $stocknotify_product_id ); ?>" />
-		<input type="hidden" class="stocknotify-variation-id" name="variation_id" value="0" />
+	<?php
+	/*
+	 * A div, not a form: on variable products this sits inside WooCommerce's
+	 * cart form and forms cannot be nested. Inputs have no name attribute so
+	 * they are never submitted with the add-to-cart request.
+	 */
+	?>
+	<div class="stocknotify-form">
+		<input type="hidden" class="stocknotify-nonce" value="<?php echo esc_attr( wp_create_nonce( 'stocknotify_subscribe' ) ); ?>" />
+		<input type="hidden" class="stocknotify-product-id" value="<?php echo esc_attr( $stocknotify_product_id ); ?>" />
+		<input type="hidden" class="stocknotify-variation-id" value="0" />
 
 		<label class="screen-reader-text" for="stocknotify-email-<?php echo esc_attr( $stocknotify_product_id ); ?>">
 			<?php esc_html_e( 'Your email address', 'stocknotify' ); ?>
@@ -43,15 +50,13 @@ if ( $stocknotify_hidden ) {
 			type="email"
 			id="stocknotify-email-<?php echo esc_attr( $stocknotify_product_id ); ?>"
 			class="stocknotify-email"
-			name="email"
 			placeholder="<?php echo esc_attr__( 'Enter your email', 'stocknotify' ); ?>"
-			required="required"
 		/>
 
-		<button type="submit" class="stocknotify-submit button">
+		<button type="button" class="stocknotify-submit button">
 			<?php esc_html_e( 'Notify Me', 'stocknotify' ); ?>
 		</button>
 
 		<span class="stocknotify-message" role="status" aria-live="polite"></span>
-	</form>
+	</div>
 </div>

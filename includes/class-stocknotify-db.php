@@ -142,6 +142,65 @@ class Stocknotify_DB {
 	}
 
 	/**
+	 * Count pending subscribers for a product, including all its variations.
+	 *
+	 * @param int $product_id Product (or parent product) ID.
+	 * @return int
+	 */
+	public static function count_pending_for_product( $product_id ) {
+		global $wpdb;
+
+		$table = self::table_name();
+
+		// Table name is derived from $wpdb->prefix + a hardcoded constant, not user input.
+		// A dedicated plugin table has no core caching API; the count changes on every subscribe/notify, so caching adds complexity without benefit here.
+		$count = $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM {$table} WHERE product_id = %d AND status = 'pending'", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$product_id
+			)
+		);
+
+		return (int) $count;
+	}
+
+	/**
+	 * Get every subscription stored for an email address (privacy export).
+	 *
+	 * @param string $email Subscriber email address.
+	 * @return object[]
+	 */
+	public static function get_subscriptions_by_email( $email ) {
+		global $wpdb;
+
+		$table = self::table_name();
+
+		// Table name is derived from $wpdb->prefix + a hardcoded constant, not user input.
+		// Privacy exports are rare, one-off requests; caching adds nothing here.
+		return $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$wpdb->prepare(
+				"SELECT product_id, variation_id, status, created_at, notified_at FROM {$table} WHERE email = %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$email
+			)
+		);
+	}
+
+	/**
+	 * Delete every subscription stored for an email address (privacy erasure).
+	 *
+	 * @param string $email Subscriber email address.
+	 * @return int Number of rows removed.
+	 */
+	public static function delete_by_email( $email ) {
+		global $wpdb;
+
+		// A dedicated plugin table has no core caching API; this write doesn't need one.
+		$result = $wpdb->delete( self::table_name(), array( 'email' => $email ), array( '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+		return $result ? (int) $result : 0;
+	}
+
+	/**
 	 * Mark a subscription as notified so it is not emailed again.
 	 *
 	 * @param int $id Subscription row id.

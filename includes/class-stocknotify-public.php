@@ -18,7 +18,10 @@ class Stocknotify_Public {
 	 */
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'woocommerce_single_product_summary', array( $this, 'render_form' ), 35 );
+		// Variable products: inside the variation wrapper, just above the Add to cart button.
+		add_action( 'woocommerce_single_variation', array( $this, 'render_form' ), 15 );
+		// Simple products: out-of-stock items have no cart form, so sit where the button would be.
+		add_action( 'woocommerce_single_product_summary', array( $this, 'render_form' ), 25 );
 	}
 
 	/**
@@ -73,6 +76,11 @@ class Stocknotify_Public {
 		}
 
 		$is_variable = $product->is_type( 'variable' );
+
+		// Render each product type from exactly one hook.
+		if ( doing_action( 'woocommerce_single_variation' ) !== $is_variable ) {
+			return;
+		}
 
 		if ( ! $is_variable && $product->is_in_stock() ) {
 			return;

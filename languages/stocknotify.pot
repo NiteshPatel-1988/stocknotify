@@ -1,0 +1,212 @@
+# Copyright (C) 2026 NitsPatel
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: StockNotify 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/stocknotify\n"
+"POT-Creation-Date: 2026-10-08T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: stocknotify\n"
+
+#. Plugin Name of the plugin
+msgid "StockNotify"
+msgstr ""
+
+#. Description of the plugin
+msgid "Let customers subscribe to be notified by email when an out-of-stock WooCommerce product, or a specific variation, is back in stock."
+msgstr ""
+
+#. Author of the plugin
+msgid "NitsPatel"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://github.com/NiteshPatel-1988"
+msgstr ""
+
+#: includes/class-stocknotify.php:92
+msgid "StockNotify requires WooCommerce to be installed and active."
+msgstr ""
+
+#: includes/class-stocknotify-admin.php:65
+msgid "Waitlist"
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:51
+msgid "Too many requests. Please try again in a few minutes."
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:59
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:64
+#: includes/class-stocknotify-ajax.php:71
+#: includes/class-stocknotify-ajax.php:75
+msgid "This product could not be found."
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:79
+msgid "This product is already back in stock."
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:83
+msgid "You are already subscribed to be notified about this product."
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:89
+#: includes/class-stocknotify-public.php:58
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: includes/class-stocknotify-ajax.php:92
+msgid "You will be notified by email when this product is back in stock."
+msgstr ""
+
+#: includes/class-stocknotify-email.php:39
+msgid "Back in Stock Notification"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:40
+msgid "Sent to a customer who asked to be notified once a product (or variation) they wanted is back in stock."
+msgstr ""
+
+#: includes/class-stocknotify-email.php:41
+msgid "Good news, it&#8217;s back in stock!"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:42
+msgid "[{site_title}] {product_name} is back in stock!"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:58
+msgid "Thanks for your patience, we hope you enjoy it!"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:125
+msgid "Sample Product"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:207
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:209
+msgid "Enable this email notification"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:213
+msgid "Subject"
+msgstr ""
+
+#. translators: %s: list of available placeholder tags
+#: includes/class-stocknotify-email.php:217
+#: includes/class-stocknotify-email.php:226
+msgid "Available placeholders: %s"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:222
+msgid "Email heading"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:231
+msgid "Additional content"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:232
+msgid "Text to appear below the main email content."
+msgstr ""
+
+#: includes/class-stocknotify-email.php:234
+msgid "N/A"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:240
+msgid "Email type"
+msgstr ""
+
+#: includes/class-stocknotify-email.php:242
+msgid "Choose which format of email to send."
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:37
+msgid "When you ask to be notified about an out-of-stock product, we store your email address, the product you are waiting for and the date of your request. We use it only to email you once when the product is back in stock. You can request export or deletion of this data at any time."
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:51
+#: includes/class-stocknotify-privacy.php:66
+msgid "StockNotify subscriptions"
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:87
+msgid "Product"
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:91
+msgid "Status"
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:95
+msgid "Subscribed on"
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:102
+msgid "Notified on"
+msgstr ""
+
+#: includes/class-stocknotify-privacy.php:109
+msgid "Back-in-stock subscriptions"
+msgstr ""
+
+#: includes/class-stocknotify-public.php:56
+msgid "Please enter your email address."
+msgstr ""
+
+#: includes/class-stocknotify-public.php:57
+msgid "Submitting…"
+msgstr ""
+
+#: templates/subscription-form.php:31
+msgid "Notify me when this product is back in stock"
+msgstr ""
+
+#: templates/subscription-form.php:47
+msgid "Your email address"
+msgstr ""
+
+#: templates/subscription-form.php:53
+msgid "Enter your email"
+msgstr ""
+
+#: templates/subscription-form.php:57
+msgid "Notify Me"
+msgstr ""
+
+#: templates/email/back-in-stock.php:24
+#: templates/email/plain/back-in-stock.php:19
+msgid "Good news!"
+msgstr ""
+
+#. translators: %s: product name, wrapped in <strong> tags
+#. translators: %s: product name
+#: templates/email/back-in-stock.php:34
+#: templates/email/plain/back-in-stock.php:24
+msgid "The product you were waiting for, %s, is back in stock."
+msgstr ""
+
+#: templates/email/back-in-stock.php:46
+msgid "Shop Now"
+msgstr ""
+
+#: templates/email/back-in-stock.php:52
+#: templates/email/plain/back-in-stock.php:30
+msgid "The product you were waiting for is back in stock."
+msgstr ""
+
+#: templates/email/plain/back-in-stock.php:28
+msgid "Shop now:"
+msgstr ""

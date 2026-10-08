@@ -100,8 +100,10 @@ class Stocknotify_Notifier {
 		$email = $emails['stocknotify_back_in_stock'];
 
 		foreach ( $subscribers as $subscriber ) {
-			$email->trigger( $subscriber->email, $product );
-			Stocknotify_DB::mark_notified( $subscriber->id );
+			// Only mark as notified when the mail was actually handed off, so failures can be retried on the next restock.
+			if ( $email->trigger( $subscriber->email, $product ) ) {
+				Stocknotify_DB::mark_notified( $subscriber->id );
+			}
 		}
 	}
 

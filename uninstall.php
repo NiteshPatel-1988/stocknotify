@@ -19,3 +19,5 @@ $stocknotify_table = $wpdb->prefix . 'stocknotify_subscribers';
 $wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', $stocknotify_table ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 
 delete_option( 'stocknotify_db_version' );
+
+wp_unschedule_hook( 'stocknotify_send_notifications' );

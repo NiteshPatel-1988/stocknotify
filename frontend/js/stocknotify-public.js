@@ -15,23 +15,40 @@
 		}
 
 		$wrap.find( '.stocknotify-variation-id' ).val( variationId || 0 );
+		$wrap.find( '.stocknotify-message' ).removeClass( 'stocknotify-success stocknotify-error' ).text( '' );
 		$wrap.toggleClass( 'stocknotify-hidden', ! show );
 	}
 
+	/**
+	 * Find the subscription form belonging to a variations form.
+	 *
+	 * @param {jQuery} $variationsForm The .variations_form element.
+	 * @return {jQuery}
+	 */
+	function findWrap( $variationsForm ) {
+		return $variationsForm.closest( '.summary, .product' ).find( '.stocknotify-form-wrap' ).first();
+	}
+
 	$( document ).on( 'found_variation', '.variations_form', function ( event, variation ) {
-		var $wrap = $( this ).closest( '.summary' ).find( '.stocknotify-form-wrap' );
-		toggleForm( $wrap, ! variation.is_in_stock, variation.variation_id );
+		toggleForm( findWrap( $( this ) ), ! variation.is_in_stock, variation.variation_id );
 	} );
 
-	$( document ).on( 'reset_data', '.variations_form', function () {
-		var $wrap = $( this ).closest( '.summary' ).find( '.stocknotify-form-wrap' );
-		toggleForm( $wrap, false, 0 );
+	$( document ).on( 'reset_data hide_variation', '.variations_form', function () {
+		toggleForm( findWrap( $( this ) ), false, 0 );
 	} );
 
-	$( document ).on( 'submit', '.stocknotify-form', function ( event ) {
+	// Enter in the email box must not submit WooCommerce's add-to-cart form.
+	$( document ).on( 'keydown', '.stocknotify-email', function ( event ) {
+		if ( 13 === event.which ) {
+			event.preventDefault();
+			$( this ).closest( '.stocknotify-form' ).find( '.stocknotify-submit' ).trigger( 'click' );
+		}
+	} );
+
+	$( document ).on( 'click', '.stocknotify-submit', function ( event ) {
 		event.preventDefault();
 
-		var $form = $( this );
+		var $form = $( this ).closest( '.stocknotify-form' );
 		var $message = $form.find( '.stocknotify-message' );
 		var $button = $form.find( '.stocknotify-submit' );
 		var email = $form.find( '.stocknotify-email' ).val();
@@ -48,7 +65,7 @@
 
 		$.post( stocknotifyPublic.ajaxUrl, {
 			action: 'stocknotify_subscribe',
-			nonce: $form.find( 'input[name="stocknotify_nonce"]' ).val(),
+			nonce: $form.find( '.stocknotify-nonce' ).val(),
 			product_id: $form.find( '.stocknotify-product-id' ).val(),
 			variation_id: $form.find( '.stocknotify-variation-id' ).val(),
 			email: email
